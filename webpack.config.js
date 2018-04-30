@@ -34,7 +34,7 @@ const developmentConfig = merge([
         host: process.env.HOST,
         port: process.env.PORT,
       }),
-    part.loadCSS()
+    parts.loadCSS()
       
 ])
 
