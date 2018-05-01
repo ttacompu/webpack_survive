@@ -15,3 +15,7 @@ deploy:
 
 script:
 - npm run build
+
+addons:
+  ssh_known_hosts:
+  - utest.eastus.cloudapp.azure.com
