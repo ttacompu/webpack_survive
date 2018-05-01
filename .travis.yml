@@ -12,5 +12,5 @@ script:
 - npm run build
 
 deploy:
-  provider : script
+-  provider : script
   script : bash deploy.sh
