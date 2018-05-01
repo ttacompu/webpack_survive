@@ -10,9 +10,3 @@ before_script:
 
 script:
 - npm run build
-
-deploy:
--  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
