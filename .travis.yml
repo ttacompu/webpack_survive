@@ -8,6 +8,10 @@ before_install:
 before_script:
 - npm install
 
+before_deploy:
+- chmod 600 ./id_rsa
+- ssh-add ./id_rsa
+
 deploy:
   - provider: script
     script:
