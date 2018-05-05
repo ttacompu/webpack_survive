@@ -3,8 +3,10 @@ node_js:
 - 6.11.4
 before_install:
 - npm i g npm@3.5.2
-before_script:
-- npm install
+
+#before_script:
+#- npm install
+
 script:
 - npm run build
 
