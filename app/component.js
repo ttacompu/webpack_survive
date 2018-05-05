@@ -1,4 +1,4 @@
-export default (text = 'travis working fne now!') =>{
+export default (text = 'testing on travis caching!') =>{
 const element = document.createElement('div');
 element.innerHTML = text;
 return element;
