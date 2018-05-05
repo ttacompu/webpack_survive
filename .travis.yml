@@ -17,7 +17,7 @@ before_deploy:
 
 deploy:
 - provider: script
-  script: bash ./deploy.sh
+  script: bash scripts/deploy.sh
 
 addons:
   ssh_known_hosts:
