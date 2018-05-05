@@ -23,3 +23,7 @@ deploy:
 addons:
   ssh_known_hosts:
   - utest.eastus.cloudapp.azure.com
+
+cache: 
+directories:
+  - node_modules
