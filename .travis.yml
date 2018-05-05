@@ -17,7 +17,8 @@ before_deploy:
 
 deploy:
 - provider: script
-  script: bash scripts/deploy.sh
+  skip_cleanup: true
+  script: scp -C  -r -q ./build/* taung@utest.eastus.cloudapp.azure.com:/var/www/html
 
 addons:
   ssh_known_hosts:
