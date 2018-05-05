@@ -12,6 +12,7 @@ script:
 before_deploy:
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/deploy_rsa
+- chmod 770 ./deploy.sh
 - ssh-add /tmp/deploy_rsa
 deploy:
 - provider: script
