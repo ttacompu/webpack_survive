@@ -3,3 +3,4 @@ node_modules
 build
 deploy_rsa 
 deploy_rsa.pub
+dist

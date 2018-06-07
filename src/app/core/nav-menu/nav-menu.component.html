@@ -1,0 +1,126 @@
+<div class="NavInnerContainer">
+    <div class="profiePic">
+        <img class="userIcon" src="{{alias + '/assets/sharepoint_user_icon.png'}}">
+        <div style="margin-top:10px;">Welcome,</div>
+        <div>{{userName}}</div>
+    </div>
+
+    <div class="menuOuterContainer">
+        <kendo-menu menuactive [vertical]="true" style="display:inline-block;" (select)="onSelect($event)" #menu>
+            <kendo-menu-item text="Home" [cssClass]="'menuItemContainer active'"></kendo-menu-item>
+
+            <kendo-menu-item text="Feeds" [cssClass]="'menuItemContainer'">
+                <ng-template kendoMenuItemContentTemplate let-item="item" let-index="index">
+                    <div class="submenuContainer">
+                        <div class="submenuHeader">Feeds</div>
+                        <div class="submenuBody">
+                            <ul>
+                                <li>
+                                    <a (click)="menu.toggle(false, index)"  routerLink="/feeds/viewFeed">View Feed</a>
+                                </li>
+                                <li>
+                                    <a (click)="menu.toggle(false, index)"  routerLink="/feeds/createFeed">Create New Feed</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </ng-template>
+            </kendo-menu-item>
+
+
+            <kendo-menu-item text="News Letter" [cssClass]="'menuItemContainer'">
+                <ng-template kendoMenuItemContentTemplate let-item="item" let-index="index">
+                    <div class="submenuContainer">
+                        <div class="submenuHeader">News Letter</div>
+                        <div class="submenuBody">
+                            <ul>
+                                <li>
+                                    <a (click)="menu.toggle(false, index)"  routerLink="/newsLetter/viewNewsLetters">View News Letters</a>
+                                </li>
+                                <li>
+                                    <a (click)="menu.toggle(false, index)"  routerLink="/newsLetter/newsLetterArchive">New Letter Archive</a>
+                                </li>
+                                <li>
+                                    <a (click)="menu.toggle(false, index)"  routerLink="/newsLetter/createNewsLetter">Create News Letter</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </ng-template>
+            </kendo-menu-item>
+
+            <kendo-menu-item text="Settings" [cssClass]="'menuItemContainer'">
+                <ng-template kendoMenuItemContentTemplate let-item="item" let-index="index">
+                    <div class="submenuContainer changeWdithHeight">
+                        <div class="subsubMenuContainer">
+                            <div class="subsubMenu">
+                                <div class="submenuHeader">Logs</div>
+                                <div class="submenuBody">
+                                    <ul>
+                                        <li>
+                                            <a (click)="menu.toggle(false, index)"  routerLink="/settings/viewLogs">View Logs</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="subsubMenu">
+                                <div class="submenuHeader">Schedule</div>
+                                <div class="submenuBody">
+                                    <ul>
+                                        <li>
+                                            <a (click)="menu.toggle(false, index)"  routerLink="/settings/viewSchedule">View Schedule</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subsubMenuContainer">
+                            <div class="subsubMenu">
+                                <div class="submenuHeader">Site Security</div>
+                                <div class="submenuBody">
+                                    <ul>
+                                        <li>
+                                            <a (click)="menu.toggle(false, index)" routerLink="/settings/siteSecurity">Site Security</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-menu-item>
+
+            <kendo-menu-item text="System" [cssClass]="'menuItemContainer'">
+                    <ng-template kendoMenuItemContentTemplate let-item="item" let-index="index">
+                        <div class="submenuContainer">
+                            <div class="submenuHeader">Tags</div>
+                            <div class="submenuBody">
+                                <ul>
+                                    <li>
+                                        <a (click)="menu.toggle(false, index)"  routerLink="/system/tagType">Tag Type</a>
+                                    </li>
+                                    <li>
+                                        <a (click)="menu.toggle(false, index)"  routerLink="/system/tagName">Tag Name</a>
+                                    </li>
+                                </ul>
+                            </div>
+    
+                        </div>
+                    </ng-template>
+                </kendo-menu-item>
+
+        </kendo-menu>
+
+    </div>
+
+    <div class="companyLogo">
+        <img style="width: 59px; height:59px" src="{{alias + '/assets/logo-icon.png'}}">
+    </div>
+
+
+</div>
