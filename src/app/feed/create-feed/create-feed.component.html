@@ -1,3 +1,210 @@
-<p>
-  create-feed works!
-</p>
+<div>
+  <h1> Cleary News</h1>
+  <h2>{{IsNew ? "Create": "Edit"}} Feed</h2>
+
+  <!-- <div>
+       <p>
+         Ditry : {{ FeedForm.dirty}}
+       </p>
+       <p>
+         Touched : {{ FeedForm.touched}}
+       </p>
+
+       <p>
+         valid : {{ FeedForm.valid}}
+       </p>
+
+       <p>
+         Value : {{ FeedForm.value | json}}
+       </p>
+     </div> -->
+
+  <form (ngSubmit)="save()" [formGroup]="FeedForm" novalidate>
+    <div class="formContainer">
+      <div class="form-group row">
+        <label for="Name" class="col-sm-2 col-form-label text-right">
+          Name :
+          <span class="redText" *ngIf="FeedForm.get('Name').validator">*</span>
+        </label>
+        <div class="col-sm-10">
+          <input [ngClass]="{'has-error' : errorMessages.Name  }"
+                 type="text" class="form-control" formControlName="Name" id="Name" placeholder="Type feed name">
+          <span class="help-block" *ngIf="errorMessages.Name">
+            {{errorMessages.Name}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="RSSLink" class="col-sm-2 col-form-label text-right">
+          RSS Link :
+          <span class="redText" *ngIf="FeedForm.get('RSSLink').validator">*</span>
+        </label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input [ngClass]="{'has-error' : errorMessages.RSSLink, 'has-noerror' : isRssValid}"
+                   type="text" class="form-control" formControlName="RSSLink" id="RSSLink" placeholder="Type RSS link">
+            <button kendoButton type="button" id="rssValidateBtn" (click)="validateRSS()">Validate</button>
+          </div>
+          <span class="help-block" *ngIf="errorMessages.RSSLink">
+            {{errorMessages.RSSLink}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <span class="col-sm-2 text-right"><span class="redText" *ngIf="FeedForm.get('InternalOrExternal').validator">*</span></span>
+        <div class="col-sm-10">
+          <div class="input-group" style="display:flex; align-items:center" formGroupName="InternalOrExternal">
+            <label> <input formControlName="IsInternal" type="checkbox" style="position:relative;top:2px" /> <span>Is Internal</span></label>
+            <div style="margin-left : 20px;" [hidden]="FeedForm.get('InternalOrExternal').get('IsInternal').value">
+              <kendo-combobox formControlName="ExternalTypeItem" [data]="ExternalTypeList" [textField]="'description'" [valueField]="'id'" style="width:200px;"
+                              [placeholder]="'Select feed type'"></kendo-combobox>
+            </div>
+          </div>
+          <span class="help-block"
+                *ngIf="(FeedForm.get('InternalOrExternal.IsInternal').touched ||
+                FeedForm.get('InternalOrExternal.IsInternal').dirty ||
+                FeedForm.get('InternalOrExternal.ExternalTypeItem').touched ||
+                FeedForm.get('InternalOrExternal.ExternalTypeItem').dirty )
+                && FeedForm.get('InternalOrExternal').errors">
+            <span *ngIf="FeedForm.get('InternalOrExternal').errors.InternalOrExternal">
+              Choose internal or external type
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="OfficeList" class="col-sm-2 col-form-label text-right">
+          Responsible Office(s) :
+          <span class="redText" *ngIf="FeedForm.get('OfficeList').validator">*</span>
+        </label>
+        <div class="col-sm-10">
+          <kendo-multiselect formControlName="OfficeList" [textField]="'officeName'" [valueField]="'officeID'" [data]="OfficeListItems" [placeholder]="'Choose at least one office'"></kendo-multiselect>
+          <span class="help-block" *ngIf="errorMessages.OfficeList">
+            {{errorMessages.OfficeList}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="ContentOwner" class="col-sm-2 col-form-label text-right">
+          Content Owner :
+          <span class="redText" *ngIf="FeedForm.get('ContentOwner').validator">*</span>
+        </label>
+        <div class="col-sm-10">
+          <kendo-combobox formControlName="ContentOwner" [data]="ContentOwnerListResult" [valueField]="'id'" style="width: 200px;"
+                          [textField]="'fullName'" [placeholder]="'Type content owner'" [filterable]="true" #ContentOwner></kendo-combobox>
+          <span class="help-block" *ngIf="errorMessages.ContentOwner">
+            {{errorMessages.ContentOwner}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="Tags" class="col-sm-2 col-form-label text-right">
+          Tag(s) :
+          <span class="redText" *ngIf="FeedForm.get('Tags').validator">*</span>
+        </label>
+        <div class="col-sm-10">
+          <kendo-multiselect #Tag [valueField]="'id'" [textField]="'name'" formControlName="Tags" [filterable]="true" [data]="TagListResult" [placeholder]="'Choose tags'"></kendo-multiselect>
+          <span class="help-block" *ngIf="errorMessages.Tags">
+            {{errorMessages.Tags}}
+          </span>
+
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="SubscriptionUser" class="col-sm-2 col-form-label text-right">Subscription User(s) : </label>
+        <div class="col-sm-10">
+          <kendo-multiselect #SubscriptionUser [filterable]="true" [textField]="'fullName'" [valueField]="'id'" formControlName="SubscriptionUser" [data]="SubscriptionUserListResult" [placeholder]="'Choose Subscription users'"></kendo-multiselect>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="SubscriptionGroup" class="col-sm-2 col-form-label text-right">Subscription Group(s) : </label>
+        <div class="col-sm-10">
+          <kendo-multiselect #SubscriptionGroup [filterable]="true" [textField]="'groupName'" [valueField]="'id'" formControlName="SubscriptionGroup" [data]="SubscriptionGroupListResult" [placeholder]="'Choose Subscription groups'"></kendo-multiselect>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="FeedDescription" class="col-sm-2 col-form-label text-right">Description : </label>
+        <div class="col-sm-10">
+          <textarea class="k-textbox" style="width:100%; height : 6em;" name="FeedDescription" placeholder="Type Description" rows="3" formControlName="FeedDescription"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="FeedDisabled" class="col-sm-2 col-form-label text-right">Disabled :</label>
+        <div class="col-sm-10" style="display:flex; align-items:center ">
+          <input type="checkbox" id="FeedDisabled" formControlName="FeedDisabled" #FeedDisabled (change)="checkboxChanged(FeedDisabled.checked)" />
+        </div>
+      </div>
+
+      <div [hidden]="IsNew">
+        <div class="form-group row">
+          <label for="Status" class="col-sm-2 col-form-label text-right">Status :</label>
+          <div class="col-sm-10" style="display:flex; align-items:center">
+            {{feed?.status}}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Count" class="col-sm-2 col-form-label text-right">News Count :</label>
+          <div class="col-sm-10" style="display:flex; align-items:center ">
+            {{feed?.postCount}}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="LastSyncdOn" class="col-sm-2 col-form-label text-right">Last Syncd On :</label>
+          <div class="col-sm-10" style="display:flex; align-items:center ">
+            {{feed?.lastSyncUpdatedOn | date:'MM/dd/yyyy hh:mm::ss a'}}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="CreatedBy" class="col-sm-2 col-form-label text-right">Created By:</label>
+          <div class="col-sm-10" style="display:flex; align-items:center ">
+            {{feed?.createdBy}}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="CreatedOn" class="col-sm-2 col-form-label text-right">Created On:</label>
+          <div class="col-sm-10" style="display:flex; align-items:center ">
+            {{feed?.createdOn | date:'MM/dd/yyyy hh:mm::ss a'}}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="ModifiedBy" class="col-sm-2 col-form-label text-right">Modified By:</label>
+          <div class="col-sm-10" style="display:flex; align-items:center ">
+            {{feed?.updatedBy}}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="ModifiedOn" class="col-sm-2 col-form-label text-right">Modified On:</label>
+          <div class="col-sm-10" style="display:flex; align-items:center ">
+            {{feed?.updatedOn | date:'MM/dd/yyyy hh:mm::ss a'}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="buttonContainer row">
+      <span class="col-sm-2"></span>
+      <div class="col-sm-10">
+        <button kendoButton [routerLink]="['/feeds', 'listFeed']">Back</button>
+        <button kendoButton type="submit" [disabled]="!FeedForm.valid">Save</button>
+      </div>
+
+    </div>
+  </form>
+</div>

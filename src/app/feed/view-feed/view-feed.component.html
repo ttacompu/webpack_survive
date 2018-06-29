@@ -1,10 +1,63 @@
-<p>view-feed works!</p>
-  <div>
-    {{outResult | json}}
+<div class="viewFeedContainer">
+  <div class="text-right">{{today | date:'MM/dd/yyy hh:mm a'}}</div>
+  <h1> Cleary News</h1>
+  <h2> Feed</h2>
+  <div class="viewFeedBody">
+    <div class="filterButtonsContainer text-right">
+      <button (click)="saveFilters()" kendoButton>Save Filters</button>
+      <button (click)="clearFilters()" kendoButton>Clear Filters</button>
+
+    </div>
+    <kendo-grid [data]="gridData"
+        [pageSize]="state.take"
+        [skip]="state.skip"
+        [sort]="state.sort"
+        [filter]="state.filter"
+        [sortable]="true"
+        [pageable]="true"
+        [groupable]="true"
+        filterable="menu"
+        (dataStateChange)="dataStateChange($event)"
+        [group]="state.group"
+      >
+      <kendo-grid-column field="feedID"  [hidden]="true">
+      </kendo-grid-column>
+      <kendo-grid-column field="name" title="name" width="200">
+      </kendo-grid-column>
+      <kendo-grid-column field="status" title="status" width="110">
+      </kendo-grid-column>
+      <kendo-grid-column field="lastSyncUpdatedOn">
+        <ng-template kendoGridHeaderTemplate>
+          <span>Last Syncd <br /> On</span>
+        </ng-template>
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.lastSyncUpdatedOn | date:"MM/dd/yyyy hh:mm a" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="displayOffices" >
+        <ng-template kendoGridHeaderTemplate>
+          <span>Responsible <br /> Office</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="feedTypeDescription" title="Feed Type">
+      </kendo-grid-column>
+      <kendo-grid-column field="contentOwner" >
+        <ng-template kendoGridHeaderTemplate>
+          <span>Content <br /> Owner</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="postCount" title="Count" width="110">
+      </kendo-grid-column>
+      <kendo-grid-column width="130">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="text-center">
+            <button kendoButton [iconClass]="'fa fa-edit'" title="Edit" [routerLink]="['/feeds', 'editFeed', dataItem.feedID]"> </button>
+            <button kendoButton [iconClass]="'fa fa-trash'" title="Delete"></button>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
   </div>
-  
+</div>
 
-  <kendo-grid [data]="outResult">
-
-  </kendo-grid>
 

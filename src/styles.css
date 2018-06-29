@@ -2,10 +2,14 @@
 html, body{
     height : 100%;
     position : relative;
-    font-size : 12px;
+    font-size : 0.9em;
 }
 
 /* kendo overwriting */
+.k-grid-header .k-header {
+  vertical-align: top !important;
+}
+
 .container-fluid{
     padding-left : 0;
     padding-right : 0;
@@ -102,4 +106,48 @@ html, body{
 .submenuContainer .submenuBody ul li:hover{
     background-color: #ddd;
     text-decoration: none !important;
+}
+
+
+/*overwrite default css */
+
+*:focus, input.form-control:focus {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none
+}
+ 
+
+th {
+  font-size: 0.9em;
+  font-weight: bold !important;
+}
+
+td {
+  font-size: 0.9em;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #aaa !important;
+  opacity: 0.8 !important;
+  /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #aaa !important;
+  opacity: 0.8 !important;
+}
+
+
+/* validation message*/
+.help-block {
+  color : red;
+  display:block;
+}
+
+.redText {
+  color : red;
+  font-weight:bold;
 }

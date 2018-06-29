@@ -13,7 +13,11 @@ const routes = [
     loadChildren: "app/feed/feed.module#FeedModule",
     data: { preload : true}
   },
-  { path: 'newsLetter', loadChildren: "app/news-letter/newsLetter.module#NewsLetterModule" },
+  {
+    path: 'newsLetter',
+    loadChildren: "app/news-letter/newsLetter.module#NewsLetterModule",
+    data: { preload: true }
+  },
   { path: 'settings', loadChildren: "app/settings/settings.module#SettingsModule" },
   { path: 'system', loadChildren: "app/system/system.module#SystemModule" },
   { path: '**', component: ErrorComponent }

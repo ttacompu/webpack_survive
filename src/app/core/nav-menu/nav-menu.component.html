@@ -16,10 +16,10 @@
                         <div class="submenuBody">
                             <ul>
                                 <li>
-                                    <a (click)="menu.toggle(false, index)"  routerLink="/feeds/viewFeed">View Feed</a>
+                                    <a (click)="menu.toggle(false, index)"  routerLink="/feeds/listFeed">View Feeds</a>
                                 </li>
                                 <li>
-                                    <a (click)="menu.toggle(false, index)"  routerLink="/feeds/createFeed">Create New Feed</a>
+                                    <a (click)="menu.toggle(false, index)"  [routerLink]="['/feeds', 'editFeed', 0]">Create New Feed</a>
                                 </li>
                             </ul>
                         </div>

@@ -1,0 +1,14 @@
+.viewFeedBody {
+  margin-top : 20px;
+}
+button{
+  width :40px;
+}
+
+.filterButtonsContainer {
+  margin : 10px 0;
+}
+.filterButtonsContainer button {
+  width: 100px;
+}
+
